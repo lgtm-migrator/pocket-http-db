@@ -23,3 +23,6 @@ require (
 	golang.org/x/sys v0.1.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
+
+// TO DO - Remove this line when finished branch
+replace github.com/pokt-foundation/portal-api-go => ../portal-api-go
