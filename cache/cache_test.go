@@ -71,7 +71,6 @@ func TestCache_SetCache(t *testing.T) {
 			Limit: 0,
 		},
 	}, nil)
-
 	readerMock.On("ReadRedirects").Return([]*repository.Redirect{
 		{
 			BlockchainID:   "0021",

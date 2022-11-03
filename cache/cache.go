@@ -209,6 +209,13 @@ func (c *Cache) addAppLimit(limit repository.AppLimit) {
 	appID := limit.ID
 	limit.ID = "" // to avoid multiple sources of truth
 
+	if limit.PayPlan.Type != repository.Enterprise {
+		payPlan, ok := c.payPlansMap[limit.PayPlan.Type]
+		if ok {
+			limit.PayPlan.Limit = payPlan.Limit
+		}
+	}
+
 	app := c.applicationsMap[appID]
 	if app != nil {
 		app.Limit = limit
@@ -273,8 +280,18 @@ func (c *Cache) updateApplication(inApp repository.Application) {
 
 	app := c.applicationsMap[inApp.ID]
 
+	limit := app.Limit
+
+	if limit.PayPlan.Type != repository.Enterprise {
+		payPlan, ok := c.payPlansMap[limit.PayPlan.Type]
+		if ok {
+			limit.PayPlan.Limit = payPlan.Limit
+		}
+	}
+
 	app.Name = inApp.Name
 	app.Status = inApp.Status
+	app.Limit = limit
 	app.FirstDateSurpassed = inApp.FirstDateSurpassed
 	app.UpdatedAt = inApp.UpdatedAt
 }
@@ -502,6 +519,7 @@ func (c *Cache) SetCache() error {
 		return err
 	}
 
+	// Always call after setPayPlans
 	err = c.setApplications()
 	if err != nil {
 		return err

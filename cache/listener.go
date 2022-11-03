@@ -148,6 +148,7 @@ func (c *Cache) parseLbApps(n repository.Notification) {
 }
 
 func (c *Cache) parseNotification(n repository.Notification) {
+
 	switch n.Table {
 	case repository.TableLoadBalancers:
 		c.parseLoadBalancerNotification(n)

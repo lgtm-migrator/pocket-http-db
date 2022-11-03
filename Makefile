@@ -3,12 +3,12 @@ test_unit:
 
 test:
 	docker-compose -f ./tests/docker-compose.yml up -d --remove-orphans --build && \
-	go test ./... -count=1 && \
+	go test ./... -count=1 -v && \
 	docker-compose -f ./tests/docker-compose.yml down --remove-orphans --rmi all -v
 
 test_e2e:
 	docker-compose -f ./tests/docker-compose.yml up -d --remove-orphans --build && \
-	go test ./... -run E2E && \
+	go test ./... -run E2E -count=1 -v && \
 	docker-compose -f ./tests/docker-compose.yml down --remove-orphans --rmi all -v
 
 test_verbose:

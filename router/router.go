@@ -111,6 +111,8 @@ func (rt *Router) GetApplications(w http.ResponseWriter, r *http.Request) {
 	jsonresponse.RespondWithJSON(w, http.StatusOK, rt.Cache.GetApplications())
 }
 
+// TODO - This Endpoint is DEPRECATED. Remove once Rate Limiter & Portal Workers are updated
+// to parse fields currently found in AppLimits from the /application endpoint instead.
 func (rt *Router) GetApplicationsLimits(w http.ResponseWriter, r *http.Request) {
 	apps := rt.Cache.GetApplications()
 
@@ -204,7 +206,7 @@ func (rt *Router) UpdateApplication(w http.ResponseWriter, r *http.Request) {
 	} else {
 		err = rt.Writer.UpdateApplication(vars["id"], &updateInput)
 		if err != nil {
-			jsonresponse.RespondWithError(w, http.StatusInternalServerError, err.Error())
+			jsonresponse.RespondWithError(w, http.StatusUnprocessableEntity, err.Error())
 			return
 		}
 
