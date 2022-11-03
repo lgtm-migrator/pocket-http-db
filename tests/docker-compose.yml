@@ -4,11 +4,7 @@ version: "3"
 services:
   pocket-http-db:
     build:
-      # context: ..
-      # TODO - REMOVE TEMP
-      context: "../.."
-      dockerfile: ./pocket-http-db/Dockerfile
-      # TODO - REMOVE TEMP
+      context: ..
     container_name: pocket-http-db
     restart: always
     ports:
